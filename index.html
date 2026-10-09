@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBook — Smart Aggregator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#FF2D55',
+                            redDark: '#D71940',
+                            purple: '#E9E3FF',
+                            purpleDark: '#7C3AED',
+                            yellow: '#FEF08A',
+                            yellowDark: '#854D0E',
+                            softBlue: '#E0F2FE',
+                            softPink: '#FCE7F3',
+                            bgLight: '#F6F5FA',
+                            black: '#121216',
+                            cardDark: '#1E1E24'
+                        }
+                    },
+                    borderRadius: { '3xl': '1.75rem', '4xl': '2.25rem' }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-brand-bgLight dark:bg-brand-black text-gray-900 dark:text-gray-100 h-[100dvh] w-full overflow-hidden transition-colors duration-500 font-sans">
+
+    <!-- ================= RESPONSIVE AUTH SCREEN ================= -->
+    <div id="authScreen" class="fixed inset-0 z-50 bg-white dark:bg-brand-black flex transition-all duration-700 ease-[cubic-bezier(0.87,0,0.13,1)]">
+        
+        <!-- Left Hero Panel (Desktop & Tablet Split View) -->
+        <div class="hidden md:flex md:w-1/2 lg:w-7/12 bg-gradient-to-br from-brand-purple/60 via-purple-100/40 to-brand-softPink/50 dark:from-purple-950/40 dark:via-brand-black dark:to-brand-cardDark p-12 flex-col justify-between relative overflow-hidden border-r border-gray-100 dark:border-gray-800">
+            
+            <!-- Brand Logo Header -->
+            <div class="relative z-10 flex items-center gap-3">
+                <div class="brand-logo-badge w-12 h-12 rounded-2xl bg-black flex items-center justify-center p-2 shadow-xl shadow-brand-red/20 border border-gray-800">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <circle cx="42" cy="50" r="32" fill="#FF2D55"/>
+                        <text x="24" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FFFFFF">Q</text>
+                        <text x="54" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FF2D55">B</text>
+                        <circle cx="82" cy="62" r="5" fill="#FF2D55"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight block leading-none">QuickBook</span>
+                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Quick book.app</span>
+                </div>
+            </div>
+
+            <!-- Hero Graphic Content -->
+            <div class="relative z-10 space-y-6 max-w-lg my-auto">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-md text-xs font-extrabold text-brand-red uppercase tracking-widest shadow-sm border border-brand-red/10">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-brand-red"></i> Smart Queue & Workspace
+                </div>
+                <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">Organize your web queue with dynamic reminders.</h1>
+                <p class="text-gray-600 dark:text-gray-400 font-medium text-base leading-relaxed">Save tutorials, documentation, and videos into one intelligent queue with learning streaks and habit tracking.</p>
+
+                <!-- Floating Feature Badges -->
+                <div class="pt-4 flex flex-wrap gap-3">
+                    <div class="px-4 py-2.5 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md text-xs font-bold flex items-center gap-2 shadow-sm">
+                        <i data-lucide="flame" class="w-4 h-4 text-amber-500"></i> Activity Heatmaps
+                    </div>
+                    <div class="px-4 py-2.5 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md text-xs font-bold flex items-center gap-2 shadow-sm">
+                        <i data-lucide="bell" class="w-4 h-4 text-brand-red"></i> QuickRemind™ Engine
+                    </div>
+                    <div class="px-4 py-2.5 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md text-xs font-bold flex items-center gap-2 shadow-sm">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-sky-500"></i> Multi-Device Sync
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative z-10 text-xs text-gray-400 font-medium">
+                © 2026 Quick book.app. Built for high-efficiency workflows.
+            </div>
+
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-red/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        </div>
+
+        <!-- Right Form Container -->
+        <div class="w-full md:w-1/2 lg:w-5/12 h-full overflow-y-auto p-6 sm:p-12 lg:p-16 flex flex-col justify-between my-auto">
+            
+            <!-- Mobile Brand Header -->
+            <div class="md:hidden flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center p-1.5 shadow-lg border border-gray-800">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <circle cx="42" cy="50" r="32" fill="#FF2D55"/>
+                        <text x="24" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FFFFFF">Q</text>
+                        <text x="54" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FF2D55">B</text>
+                        <circle cx="82" cy="62" r="5" fill="#FF2D55"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight block leading-none">QuickBook</span>
+                    <span class="text-[9px] font-bold text-brand-red uppercase tracking-widest">Quick book.app</span>
+                </div>
+            </div>
+
+            <div class="w-full max-w-md mx-auto space-y-8 my-auto">
+                <div class="space-y-3">
+                    <div class="liquid-track rounded-2xl p-1 flex relative items-center justify-between text-xs font-bold h-12">
+                        <div id="authTabThumb" class="liquid-thumb absolute top-1 bottom-1 w-[49%] rounded-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"></div>
+                        <button type="button" onclick="switchAuthTab('login')" id="tabLoginBtn" class="relative z-10 w-1/2 text-center font-extrabold text-brand-black dark:text-white">Sign In</button>
+                        <button type="button" onclick="switchAuthTab('signup')" id="tabSignupBtn" class="relative z-10 w-1/2 text-center font-extrabold text-gray-400">Create Account</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 id="authTitle" class="text-3xl font-extrabold tracking-tight">Welcome back</h2>
+                    <p id="authSubtitle" class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Enter your credentials to access your saved queue.</p>
+                </div>
+
+                <form id="loginForm" class="space-y-4">
+                    <div id="nameFieldGroup" class="input-group hidden">
+                        <label>Full Name</label>
+                        <input type="text" id="nameInput" placeholder="your name">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="emailInput" required placeholder="ex: name@sstar.app">
+                    </div>
+
+                    <div class="input-group relative">
+                        <div class="flex justify-between items-center mb-1.5 ml-2">
+                            <label class="!mb-0">Password</label>
+                            <a href="#" id="forgotPassLink" onclick="alert('Password reset link sent!')" class="text-[11px] font-extrabold text-brand-red hover:underline">Forgot?</a>
+                        </div>
+                        <div class="relative">
+                            <input type="password" id="passwordInput" required placeholder="••••••••" class="pr-12">
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                                <i data-lucide="eye" id="eyeIcon" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 ml-1 pt-1">
+                        <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded-md text-brand-red focus:ring-brand-red border-gray-300 dark:border-gray-700 dark:bg-gray-800" checked>
+                        <label for="rememberMe" class="text-xs text-gray-500 dark:text-gray-400 font-bold select-none cursor-pointer">Remember this device</label>
+                    </div>
+
+                    <button type="submit" id="authSubmitBtn" class="w-full py-4 rounded-2xl bg-brand-black dark:bg-white text-white dark:text-black font-extrabold text-sm hover:scale-[0.99] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2">
+                        <span id="btnText">Sign In & Sync</span>
+                        <i data-lucide="arrow-right" id="btnIcon" class="w-4 h-4"></i>
+                    </button>
+                </form>
+
+                <div class="space-y-4 pt-2">
+                    <div class="relative flex py-1 items-center">
+                        <div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+                        <span class="flex-shrink mx-4 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Or continue with</span>
+                        <div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" onclick="quickSocialLogin('Google')" class="py-3 px-4 rounded-xl border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 font-bold text-xs flex items-center justify-center gap-2 transition-colors">
+                            <i data-lucide="chrome" class="w-4 h-4 text-red-500"></i> Google
+                        </button>
+                        <button type="button" onclick="quickSocialLogin('GitHub')" class="py-3 px-4 rounded-xl border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 font-bold text-xs flex items-center justify-center gap-2 transition-colors">
+                            <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center text-xs text-gray-400 font-medium pt-6">
+                Protected by Sstar ProLocker™
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN DASHBOARD ================= -->
+    <div id="mainApp" class="h-full w-full flex opacity-0 translate-y-8 transition-all duration-700 ease-out">
+        
+        <!-- Sidebar -->
+        <aside class="hidden md:flex flex-col w-24 lg:w-72 border-r border-gray-200/60 dark:border-gray-800/60 bg-white/50 dark:bg-brand-cardDark/30 backdrop-blur-xl p-6 justify-between stagger-item z-40 relative">
+            <div class="space-y-10">
+                
+                <!-- Logo Component -->
+                <div class="flex items-center gap-3 lg:px-2">
+                    <div class="w-11 h-11 rounded-2xl bg-black flex items-center justify-center p-1.5 shadow-lg border border-gray-800 shrink-0">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="42" cy="50" r="32" fill="#FF2D55"/>
+                            <text x="24" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FFFFFF">Q</text>
+                            <text x="54" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FF2D55">B</text>
+                            <circle cx="82" cy="62" r="5" fill="#FF2D55"/>
+                        </svg>
+                    </div>
+                    <div class="hidden lg:block">
+                        <h1 class="text-xl font-extrabold tracking-tight leading-none">QuickBook</h1>
+                        <span class="text-[9px] font-bold text-brand-red uppercase tracking-widest">Quick book.app</span>
+                    </div>
+                </div>
+                
+                <nav class="space-y-3">
+                    <a href="#" class="sidebar-link active"><i data-lucide="home"></i> <span class="hidden lg:block">Dashboard</span></a>
+                    <a href="#" class="sidebar-link"><i data-lucide="grid"></i> <span class="hidden lg:block">Queue</span></a>
+                    <a href="#" class="sidebar-link"><i data-lucide="pie-chart"></i> <span class="hidden lg:block">Analytics</span></a>
+                    <button onclick="openSettings('plans')" class="sidebar-link w-full text-left"><i data-lucide="sparkles" class="text-brand-red"></i> <span class="hidden lg:block">Pro Upgrade</span></button>
+                </nav>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Theme Slider -->
+                <div class="hidden lg:block space-y-3">
+                    <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest ml-2">Theme</label>
+                    <div class="liquid-track rounded-2xl p-1.5 flex relative items-center justify-between text-xs font-bold w-full h-12">
+                        <div id="glassThumbDesktop" class="liquid-thumb absolute top-1.5 bottom-1.5 w-[31%] rounded-xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"></div>
+                        <button onclick="setTheme('light', 0)" class="theme-btn relative z-10 w-1/3 text-center">Light</button>
+                        <button onclick="setTheme('dark', 1)" class="theme-btn relative z-10 w-1/3 text-center">Dark</button>
+                        <button onclick="setTheme('system', 2)" class="theme-btn relative z-10 w-1/3 text-center">Auto</button>
+                    </div>
+                </div>
+
+                <!-- Settings & Profile Trigger -->
+                <button onclick="openSettings('plans')" class="flex items-center gap-3 p-2.5 bg-gray-100/80 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-2xl transition-all w-full text-left group border border-gray-200/50 dark:border-gray-700/50">
+                    <div class="w-10 h-10 rounded-xl bg-brand-red text-white font-extrabold flex items-center justify-center shrink-0 shadow-md shadow-brand-red/30" id="userAvatarText">SH</div>
+                    <div class="hidden lg:block overflow-hidden flex-1">
+                        <span class="text-sm font-bold block truncate" id="userNameDisplay">your name</span>
+                        <span class="text-[10px] text-gray-500 font-medium block truncate" id="userEmailDisplay">ex: name@sstar.app</span>
+                    </div>
+                    <i data-lucide="settings" class="w-4 h-4 text-gray-400 hidden lg:block group-hover:rotate-45 transition-transform"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content View -->
+        <main class="flex-1 h-full overflow-y-auto no-scrollbar relative">
+            <div class="p-6 md:p-10 max-w-7xl mx-auto space-y-8 pb-32 md:pb-10">
+                
+                <!-- Mobile Header -->
+                <header class="md:hidden flex items-center justify-between stagger-item delay-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center p-1.5 shadow-md border border-gray-800">
+                            <svg viewBox="0 0 100 100" class="w-full h-full">
+                                <circle cx="42" cy="50" r="32" fill="#FF2D55"/>
+                                <text x="24" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FFFFFF">Q</text>
+                                <text x="54" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FF2D55">B</text>
+                                <circle cx="82" cy="62" r="5" fill="#FF2D55"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 font-semibold block uppercase tracking-wider">Welcome back</span>
+                            <span class="text-xl font-bold tracking-tight" id="mobileNameDisplay">Samarth</span>
+                        </div>
+                    </div>
+                    <button onclick="openSettings('plans')" class="w-11 h-11 rounded-2xl bg-brand-red text-white font-extrabold flex items-center justify-center shadow-lg shadow-brand-red/30 hover:scale-105 transition-transform" id="mobileAvatarText">
+                        SH
+                    </button>
+                </header>
+
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                    
+                    <!-- Left Section -->
+                    <div class="xl:col-span-8 space-y-8">
+                        
+                        <!-- QuickRemind Card -->
+                        <section class="stagger-item delay-100">
+                            <div class="bg-gradient-to-br from-brand-purple via-purple-100 to-pink-100 dark:from-purple-950/40 dark:via-brand-black dark:to-brand-cardDark rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden shadow-sm border border-purple-200/50 dark:border-purple-900/30 group">
+                                <div class="relative z-10 space-y-4 max-w-sm">
+                                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md text-[11px] font-extrabold text-brand-red uppercase tracking-wide">
+                                        <i data-lucide="bell-ring" class="w-3.5 h-3.5 animate-bounce-slow text-brand-red"></i> QuickRemind™ Active
+                                    </div>
+                                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight">Daily Video Challenge</h2>
+                                    <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">Watch your saved tutorials before 09:00 PM to maintain your learning streak.</p>
+                                </div>
+                                <div class="absolute right-6 bottom-6 md:right-10 md:bottom-10 w-24 h-24 md:w-28 md:h-28 bg-brand-red rounded-[2rem] rotate-12 flex items-center justify-center text-white font-extrabold shadow-2xl shadow-brand-red/40 group-hover:rotate-6 group-hover:scale-105 transition-all duration-500">
+                                    <i data-lucide="play" class="w-10 h-10 md:w-12 md:h-12 fill-current ml-1"></i>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- URL Save Form -->
+                        <section class="stagger-item delay-200">
+                            <form id="quickSaveForm" class="bg-white dark:bg-brand-cardDark p-3 rounded-3xl border border-gray-100 dark:border-gray-800 flex gap-3 shadow-sm focus-within:shadow-md focus-within:border-brand-red/30 transition-all">
+                                <input type="url" id="quickUrl" required placeholder="Paste YouTube link or article to read later..." class="flex-1 px-5 text-sm md:text-base bg-transparent focus:outline-none dark:text-white font-medium placeholder:text-gray-400">
+                                <button type="submit" class="h-14 w-14 md:px-8 md:w-auto rounded-2xl bg-brand-black dark:bg-white text-white dark:text-black flex items-center justify-center gap-2 shrink-0 shadow-lg hover:scale-105 active:scale-95 transition-all font-bold">
+                                    <i data-lucide="plus" class="w-6 h-6"></i>
+                                    <span class="hidden md:block">Save to Queue</span>
+                                </button>
+                            </form>
+                        </section>
+
+                        <!-- Queue Grid -->
+                        <section class="stagger-item delay-300 space-y-5">
+                            <div class="flex items-center justify-between px-2">
+                                <h3 class="font-extrabold text-xl tracking-tight">Your Queue</h3>
+                                <span class="text-xs font-bold text-gray-500 bg-gray-200/50 dark:bg-brand-cardDark px-4 py-1.5 rounded-full"><span id="saveCount">2</span> / 5 this week</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5" id="queueGrid">
+                                <!-- Cards rendered via JS -->
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Right Section -->
+                    <div class="xl:col-span-4 space-y-6 stagger-item delay-400">
+                        <h3 class="font-extrabold text-xl tracking-tight px-2">Dashboard Stats</h3>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white dark:bg-brand-cardDark p-5 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+                                <div class="w-10 h-10 rounded-full bg-brand-softBlue dark:bg-sky-900/40 flex items-center justify-center text-sky-600 dark:text-sky-400 mb-3"><i data-lucide="video" class="w-5 h-5"></i></div>
+                                <span class="text-2xl font-extrabold">0</span>
+                                <span class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1">Watched</span>
+                            </div>
+                            <div class="bg-white dark:bg-brand-cardDark p-5 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+                                <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/50 flex items-center justify-center text-amber-700 dark:text-amber-300 mb-3"><i data-lucide="flame" class="w-5 h-5"></i></div>
+                                <span class="text-2xl font-extrabold">0 <span class="text-sm font-medium text-gray-400">days</span></span>
+                                <span class="text-xs text-gray-400 font-bold uppercase tracking-wider mt-1">Current Streak</span>
+                            </div>
+                        </div>
+
+                        <!-- Heatmap -->
+                        <div class="bg-white dark:bg-brand-cardDark p-6 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-extrabold text-sm">Learning Activity</h4>
+                                <span class="text-[10px] text-gray-400 font-bold uppercase">Last 12 Weeks</span>
+                            </div>
+                            <div class="overflow-x-auto no-scrollbar pb-2">
+                                <div id="activityGrid" class="grid grid-rows-7 grid-flow-col gap-1.5 w-max"></div>
+                            </div>
+                        </div>
+
+                        <!-- Pro Card Upgrade Banner -->
+                        <div class="p-6 bg-gradient-to-br from-brand-red/10 via-purple-50 to-pink-50 dark:from-brand-red/20 dark:to-brand-cardDark rounded-3xl border border-brand-red/20 flex flex-col items-start gap-4">
+                            <div class="p-2.5 rounded-xl bg-brand-red text-white shadow-md shadow-brand-red/30"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="font-extrabold text-lg">QuickBook Pro</h4>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 font-medium mt-1 leading-relaxed">Unlock unlimited saves, API syncing, and advanced AI tagging.</p>
+                            </div>
+                            <button onclick="openSettings('plans')" class="w-full py-3.5 bg-brand-black dark:bg-white text-white dark:text-black rounded-xl font-bold text-sm shadow-lg hover:scale-[0.99] active:scale-95 transition-all">View Subscription Plans</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Mobile Navigation -->
+        <nav class="md:hidden fixed bottom-6 left-6 right-6 z-40 stagger-item delay-500">
+            <div class="glass-nav rounded-[2rem] px-6 py-3.5 flex justify-between items-center shadow-2xl border border-white/40 dark:border-gray-700/50">
+                <button class="nav-btn active"><i data-lucide="home"></i></button>
+                <button class="nav-btn"><i data-lucide="grid"></i></button>
+                <button class="nav-btn"><i data-lucide="pie-chart"></i></button>
+                <button class="nav-btn" onclick="openSettings('plans')"><i data-lucide="settings"></i></button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- ================= FULL INTERACTIVE SETTINGS MODAL ================= -->
+    <div id="settingsOverlay" onclick="closeSettings()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    
+    <div id="settingsModal" class="fixed z-50 bg-white dark:bg-[#1A1A1F]
+        bottom-0 left-0 right-0 rounded-t-[2.5rem] p-6 pb-10 max-h-[90vh] overflow-y-auto no-scrollbar
+        md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-3xl md:w-full md:max-w-xl md:p-8
+        shadow-2xl border border-gray-100 dark:border-gray-800
+        transform translate-y-full md:scale-95 md:translate-y-0 opacity-0 pointer-events-none transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col gap-6">
+        
+        <!-- Header with Brand Logo -->
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-black flex items-center justify-center p-1.5 shadow-md border border-gray-800 shrink-0">
+                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                        <circle cx="42" cy="50" r="32" fill="#FF2D55"/>
+                        <text x="24" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FFFFFF">Q</text>
+                        <text x="54" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FF2D55">B</text>
+                        <circle cx="82" cy="62" r="5" fill="#FF2D55"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-extrabold tracking-tight leading-none">Settings & App Hub</h3>
+                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Quick book.app</span>
+                </div>
+            </div>
+            <button onclick="closeSettings()" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"><i data-lucide="x" class="w-5 h-5 text-gray-500"></i></button>
+        </div>
+
+        <!-- Navigation Tabs inside Settings -->
+        <div class="grid grid-cols-4 gap-1.5 p-1 bg-gray-100 dark:bg-gray-900 rounded-2xl text-[11px] font-extrabold">
+            <button onclick="switchSettingsTab('plans')" id="setTab-plans" class="settings-nav-tab active">PLANS</button>
+            <button onclick="switchSettingsTab('notifications')" id="setTab-notifications" class="settings-nav-tab">NOTIFICATIONS</button>
+            <button onclick="switchSettingsTab('rate')" id="setTab-rate" class="settings-nav-tab">RATE US</button>
+            <button onclick="switchSettingsTab('app')" id="setTab-app" class="settings-nav-tab">APP DETAILS</button>
+        </div>
+
+        <!-- Dynamic Settings Content Sections -->
+        <div class="space-y-6">
+            
+            <!-- SECTION 1: SUBSCRIPTION PLANS -->
+            <div id="settingsSection-plans" class="settings-section space-y-4">
+                <div class="text-center space-y-1 mb-4">
+                    <h4 class="text-lg font-extrabold">Choose Your Plan</h4>
+                    <p class="text-xs text-gray-500 font-medium">Upgrade to QuickBook Pro for unrestricted queue saves.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Free Plan Card -->
+                    <div class="p-5 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/40 space-y-3 flex flex-col justify-between">
+                        <div>
+                            <span class="px-2.5 py-1 rounded-full bg-gray-200 dark:bg-gray-800 text-[10px] font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-300">Free Tier</span>
+                            <div class="text-2xl font-extrabold mt-3">₹0 <span class="text-xs text-gray-400 font-normal">/ month</span></div>
+                            <ul class="text-xs text-gray-500 dark:text-gray-400 space-y-2 mt-3 font-medium">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-green-500"></i> Up to 5 queue saves/week</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-green-500"></i> Daily streak tracking</li>
+                                <li class="flex items-center gap-2"><i data-lucide="x" class="w-3.5 h-3.5 text-gray-400"></i> AI QuickRemind™ Sync</li>
+                            </ul>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 text-xs font-bold text-gray-500 cursor-default">Current Active Plan</button>
+                    </div>
+
+                    <!-- Pro Plan Card -->
+                    <div class="p-5 rounded-2xl border-2 border-brand-red bg-gradient-to-b from-brand-red/5 to-transparent space-y-3 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-brand-red text-white text-[9px] font-extrabold uppercase tracking-widest">Recommended</div>
+                        <div>
+                            <span class="px-2.5 py-1 rounded-full bg-brand-red/10 text-brand-red text-[10px] font-extrabold uppercase tracking-wider">QuickBook Pro</span>
+                            <div class="text-2xl font-extrabold mt-3 text-brand-red">₹199 <span class="text-xs text-gray-400 font-normal">/ month</span></div>
+                            <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-2 mt-3 font-medium">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-red"></i> Unlimited Queue Saves</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-red"></i> Full QuickRemind™ AI Engine</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-red"></i> Cross-device Sync & Backups</li>
+                            </ul>
+                        </div>
+                        <button onclick="upgradeToProSim()" id="upgradeBtn" class="w-full py-2.5 rounded-xl bg-brand-red text-white text-xs font-extrabold shadow-md shadow-brand-red/30 hover:scale-[0.98] active:scale-95 transition-all">Upgrade Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: NOTIFICATION SETTINGS -->
+            <div id="settingsSection-notifications" class="settings-section hidden space-y-4">
+                <div class="space-y-1 mb-2">
+                    <h4 class="text-base font-extrabold">Notification Preferences</h4>
+                    <p class="text-xs text-gray-500 font-medium">Control how and when QuickBook alerts you.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800">
+                        <div>
+                            <span class="font-bold text-sm block">QuickRemind™ Push Alerts</span>
+                            <span class="text-xs text-gray-400 font-medium">Get notified before scheduled video times</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notifPush" checked onchange="saveNotificationPref('push', this.checked)">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800">
+                        <div>
+                            <span class="font-bold text-sm block">Daily Streak Reminders</span>
+                            <span class="text-xs text-gray-400 font-medium">Alerts to maintain your activity heatmap</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notifStreak" checked onchange="saveNotificationPref('streak', this.checked)">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800">
+                        <div>
+                            <span class="font-bold text-sm block">Weekly Email Summary</span>
+                            <span class="text-xs text-gray-400 font-medium">Receive weekly digest of completed topics</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notifEmail" onchange="saveNotificationPref('email', this.checked)">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: RATE US -->
+            <div id="settingsSection-rate" class="settings-section hidden space-y-4 text-center">
+                <div class="space-y-1">
+                    <h4 class="text-base font-extrabold">Enjoying QuickBook?</h4>
+                    <p class="text-xs text-gray-500 font-medium">Rate your experience to help us improve the app.</p>
+                </div>
+
+                <!-- Star Rating Widget -->
+                <div class="flex justify-center items-center gap-2 py-4">
+                    <button onclick="setRating(1)" class="star-btn text-gray-300 hover:text-amber-400 transition-colors p-1" data-star="1"><i data-lucide="star" class="w-8 h-8 fill-current"></i></button>
+                    <button onclick="setRating(2)" class="star-btn text-gray-300 hover:text-amber-400 transition-colors p-1" data-star="2"><i data-lucide="star" class="w-8 h-8 fill-current"></i></button>
+                    <button onclick="setRating(3)" class="star-btn text-gray-300 hover:text-amber-400 transition-colors p-1" data-star="3"><i data-lucide="star" class="w-8 h-8 fill-current"></i></button>
+                    <button onclick="setRating(4)" class="star-btn text-gray-300 hover:text-amber-400 transition-colors p-1" data-star="4"><i data-lucide="star" class="w-8 h-8 fill-current"></i></button>
+                    <button onclick="setRating(5)" class="star-btn text-gray-300 hover:text-amber-400 transition-colors p-1" data-star="5"><i data-lucide="star" class="w-8 h-8 fill-current"></i></button>
+                </div>
+
+                <textarea id="rateFeedback" placeholder="Write any feedback or suggestions..." class="w-full p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs focus:outline-none focus:border-brand-red h-24 resize-none font-medium"></textarea>
+
+                <button onclick="submitRating()" id="submitRateBtn" class="w-full py-3 rounded-2xl bg-brand-black dark:bg-white text-white dark:text-black font-extrabold text-xs shadow-md hover:scale-[0.99] active:scale-95 transition-all">Submit Review</button>
+            </div>
+
+            <!-- SECTION 4: APP DETAILS -->
+            <div id="settingsSection-app" class="settings-section hidden space-y-4">
+                <div class="p-5 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800 space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-black flex items-center justify-center p-2 shadow-md border border-gray-800">
+                            <svg viewBox="0 0 100 100" class="w-full h-full">
+                                <circle cx="42" cy="50" r="32" fill="#FF2D55"/>
+                                <text x="24" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FFFFFF">Q</text>
+                                <text x="54" y="66" font-family="sans-serif" font-weight="900" font-size="46" fill="#FF2D55">B</text>
+                                <circle cx="82" cy="62" r="5" fill="#FF2D55"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-lg font-extrabold block leading-tight">QuickBook Smart Aggregator</span>
+                            <span class="text-xs text-gray-400 font-semibold">Domain: Quick book.app</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200/60 dark:border-gray-800 pt-3 text-xs space-y-2 text-gray-500 font-medium">
+                        <div class="flex justify-between"><span>Version</span> <span class="font-bold text-gray-800 dark:text-gray-200">2.4.0 (Build 2026.10)</span></div>
+                        <div class="flex justify-between"><span>Engine</span> <span class="font-bold text-gray-800 dark:text-gray-200">QuickRemind v3.1</span></div>
+                        <div class="flex justify-between"><span>Encryption</span> <span class="font-bold text-gray-800 dark:text-gray-200">AES-256 Enabled</span></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+                    <a href="#" onclick="alert('QuickBook Privacy Policy is active and secured.')" class="p-3.5 rounded-xl bg-gray-100 dark:bg-gray-800/60 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center justify-between transition-colors">
+                        <span>Privacy Policy</span>
+                        <i data-lucide="external-link" class="w-3.5 h-3.5 text-gray-400"></i>
+                    </a>
+                    <a href="#" onclick="alert('Terms of Service: Authorized personal use.')" class="p-3.5 rounded-xl bg-gray-100 dark:bg-gray-800/60 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center justify-between transition-colors">
+                        <span>Terms of Use</span>
+                        <i data-lucide="external-link" class="w-3.5 h-3.5 text-gray-400"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: LOGOUT BUTTON -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+            <button onclick="handleLogout()" class="w-full py-3.5 rounded-2xl bg-red-500/10 text-red-600 dark:text-red-400 font-extrabold text-xs tracking-wider uppercase flex items-center justify-center gap-2 hover:bg-red-500/20 active:scale-95 transition-all">
+                <i data-lucide="log-out" class="w-4 h-4"></i> LOGOUT FROM QUICKBOOK
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
